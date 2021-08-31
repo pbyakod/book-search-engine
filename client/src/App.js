@@ -34,7 +34,7 @@ const gqlClient = new ApolloClient({
 function App() {
   return (
     // implementing thee apolloprovider for our client
-    <ApolloProvider client={ client }>
+    <ApolloProvider client={ gqlClient }>
       <Router>
         <>
           <Navbar />

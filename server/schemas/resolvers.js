@@ -24,27 +24,27 @@ const resolvers = {
         // the login mutation
         login: async (parent, { email, password }) => {
             // retrieving a user by their email input
-            const getUser = await User.findOne({ email });
+            const user = await User.findOne({ email });
             // if the email does not match a particular user, return an autherror stating the error
-            if (!getUser) {
+            if (!user) {
                 throw new AuthenticationError ('No user profile matches the entered email address!')
             }
             // checking to see if their password input matches the listed password
             const checkPassword = await User.isCorrectPassword(password)
             // if the passwords do not match, return an autherror stating the error
             if (!checkPassword) {
-                throw new AuthenticationError ('The password you have entered is not valid!')
+                throw new AuthenticationError ('The password you have entered is not valid!');
             }
+            const token = signToken(user);
+            return { token, user };
         },
 
         // the adduser mutation
         addUser: async (parent, { username, email, password }) => {
             // making a user based off their username, email, and password inputs
-            const makeUser = await User.create({ username, email, password });
-            // allocating a generated token to that particular user
+            const user = await User.create({ username, email, password });
             const token = signToken(user);
-            // returning both the user credentials and their respective token
-            return { makeUser, token };
+            return { user, token };
         },
 
         // the savebook mutation
