@@ -6,6 +6,22 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// loading in middleware
+const { ApolloServer } = require('apollo-server-express');
+const { authMiddleware } = require('./utils/auth');
+const { typeDefs, resolvers } = require('./schemas');
+
+// creating server const to apply middleware
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+})
+
+// applying middleware to the application
+server.applyMiddleware({ app });
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
