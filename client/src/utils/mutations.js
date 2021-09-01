@@ -1,3 +1,4 @@
+// importing gql from apollo client
 import { gql } from '@apollo/client';
 
 // exports and executes the loginuser mutation in the apollo server

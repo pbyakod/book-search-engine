@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
-
 import { useQuery, useMutation } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
@@ -32,11 +30,9 @@ const SavedBooks = () => {
           bookId
         }
       });
-
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
-
       const updatedUser = await response.json();
       setUserData(updatedUser);
       // upon success, remove book's id from localStorage
@@ -44,6 +40,7 @@ const SavedBooks = () => {
     } catch (err) {
       console.error(err);
     }
+    
   };
 
   // if data isn't here yet, say so
