@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 const db = require('./config/connection');
 const routes = require('./routes');
 
@@ -25,14 +26,15 @@ server.applyMiddleware({ app });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/books',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  },
+const MONGODB_URI = 'mongodb+srv://user-1:passwordauth123@cluster0.y5cwp.mongodb.net/books?retryWrites=true&w=majority'
+
+mongoose.connect(MONGODB_URI || "mongodb://localhost/books", 
+  { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+  }
 );
 
 // if we're in production, serve client/build as static assets
